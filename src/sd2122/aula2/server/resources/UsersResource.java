@@ -6,7 +6,10 @@ import jakarta.ws.rs.core.Response.Status;
 import sd2122.aula2.api.User;
 import sd2122.aula2.api.service.RestUsers;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 @Singleton
@@ -108,9 +111,13 @@ public class UsersResource implements RestUsers {
 		Log.info("searchUsers : pattern = " + pattern);
 		
 		//Check if the pattern is null or empty
-		if (pattern == null || pattern.equals("")) {
+		if (pattern == null) {
 			Log.info("Pattern null.");
 			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		
+		if (pattern.equals("")) {
+			return users.values().stream().toList();
 		}
 		
 		List<User> userList = new LinkedList<>();
