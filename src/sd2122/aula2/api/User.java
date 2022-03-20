@@ -5,12 +5,14 @@ package sd2122.aula2.api;
  * Represents a User in the system
  */
 public class User {
+	
 	private String email;
 	private String userId;
 	private String fullName;
 	private String password;
 	
-	public User(){	
+	public User(){
+	
 	}
 	
 	public User(String userId, String fullName, String email, String password) {

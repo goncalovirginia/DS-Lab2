@@ -6,9 +6,7 @@ import jakarta.ws.rs.core.Response.Status;
 import sd2122.aula2.api.User;
 import sd2122.aula2.api.service.RestUsers;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Singleton
@@ -50,7 +48,7 @@ public class UsersResource implements RestUsers {
 		
 		// Check if user is valid
 		if (userId == null || password == null) {
-			Log.info("UserId or passwrod null.");
+			Log.info("UserId or password null.");
 			throw new WebApplicationException(Status.BAD_REQUEST);
 		}
 		
@@ -73,26 +71,59 @@ public class UsersResource implements RestUsers {
 	
 	
 	@Override
-	public User updateUser(String userId, String password, User user) {
-		Log.info("updateUser : user = " + userId + "; pwd = " + password + " ; user = " + user);
-		// TODO Complete method
-		throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+	public User updateUser(String userId, String password, User updatedUser) {
+		Log.info("updateUser : user = " + userId + "; pwd = " + password + " ; user = " + updatedUser);
+		
+		User user = getUser(userId, password);
+		
+		//Check if the updated user is null
+		if (updatedUser == null) {
+			Log.info("Updated user null.");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		
+		if (updatedUser.getPassword() != null) {
+			user.setPassword(updatedUser.getPassword());
+		}
+		if (updatedUser.getEmail() != null) {
+			user.setEmail(updatedUser.getEmail());
+		}
+		if (updatedUser.getFullName() != null) {
+			user.setFullName(updatedUser.getFullName());
+		}
+		
+		return user;
 	}
 	
 	
 	@Override
 	public User deleteUser(String userId, String password) {
 		Log.info("deleteUser : user = " + userId + "; pwd = " + password);
-		// TODO Complete method
-		throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+		return users.remove(getUser(userId, password).getUserId());
 	}
 	
 	
 	@Override
 	public List<User> searchUsers(String pattern) {
 		Log.info("searchUsers : pattern = " + pattern);
-		// TODO Complete method
-		throw new WebApplicationException(Status.NOT_IMPLEMENTED);
+		
+		//Check if the pattern is null or empty
+		if (pattern == null || pattern.equals("")) {
+			Log.info("Pattern null.");
+			throw new WebApplicationException(Status.BAD_REQUEST);
+		}
+		
+		List<User> userList = new LinkedList<>();
+		String patternLowerCase = pattern.toLowerCase();
+		
+		for (String userId : users.keySet()) {
+			if (userId.toLowerCase().contains(patternLowerCase)) {
+				User user = users.get(userId);
+				userList.add(new User(user.getUserId(), user.getFullName(), user.getEmail(), ""));
+			}
+		}
+		
+		return userList;
 	}
 	
 }

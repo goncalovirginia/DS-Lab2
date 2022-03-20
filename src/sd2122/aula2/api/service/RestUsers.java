@@ -56,8 +56,8 @@ public interface RestUsers {
 	 * @param password password of the user
 	 * @param user     Updated information
 	 * @return 200 the updated user object, if the name exists and password matches
-	 *         the existing password 403 if the password is incorrect 404 if no user
-	 *         exists with the provided userId 400 otherwise.
+	 *         the existing password, 403 if the password is incorrect, 404 if no user
+	 *         exists with the provided userId, 400 otherwise.
 	 */
 	@PUT
 	@Path("/{" + USER_ID + "}")
@@ -69,7 +69,7 @@ public interface RestUsers {
 	 * Deletes the user identified by userId. The spreadsheets owned by the user
 	 * should be eventually removed (asynchronous deletion is ok).
 	 * 
-	 * @param nauserId the userId of the user
+	 * @param userId the userId of the user
 	 * @param password password of the user
 	 * @return 200 the deleted user object, if the name exists and pwd matches the
 	 *         existing password 403 if the password is incorrect 404 if no user

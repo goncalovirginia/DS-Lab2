@@ -25,17 +25,18 @@ public class UsersServer {
 	public static void main(String[] args) {
 		try {
 			
-		ResourceConfig config = new ResourceConfig();
-		config.register(UsersResource.class);
+			ResourceConfig config = new ResourceConfig();
+			config.register(UsersResource.class);
 
-		String ip = InetAddress.getLocalHost().getHostAddress();
-		String serverURI = String.format(SERVER_URI_FMT, ip, PORT);
-		JdkHttpServerFactory.createHttpServer( URI.create(serverURI), config);
+			String ip = InetAddress.getLocalHost().getHostAddress();
+			String serverURI = String.format(SERVER_URI_FMT, ip, PORT);
+			JdkHttpServerFactory.createHttpServer( URI.create(serverURI), config);
 	
-		Log.info(String.format("%s Server ready @ %s\n",  SERVICE, serverURI));
+			Log.info(String.format("%s Server ready @ %s\n",  SERVICE, serverURI));
 		
-		//More code can be executed here...
-		} catch( Exception e) {
+			//More code can be executed here...
+		}
+		catch(Exception e) {
 			Log.severe(e.getMessage());
 		}
 	}	
